@@ -4,6 +4,7 @@ import adafruit_ltr390
 from adafruit_ltr390 import Gain,Resolution
 import board
 import busio
+import os
 from time import sleep
 
 i2c = busio.I2C(board.SCL, board.SDA)
@@ -26,6 +27,10 @@ def messure():
 		return None
 	return data
 
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+file_path = os.path.join(SCRIPT_DIR, "research/messurments.txt")
+
 def main():
     while True:
         try:
@@ -33,7 +38,7 @@ def main():
             if now.minute > 37:
                 break
             data = messure()
-            with open("research/messurments.txt", "a") as file:
+            with open(file_path, "a") as file:
                 if data:
                     file.write(f"{datetime.now().isoformat()} {data['uv']} {data['lux']}\n")
                 else:
