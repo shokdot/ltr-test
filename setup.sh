@@ -9,6 +9,7 @@ sudo systemctl enable cron
 sudo systemctl start cron
 mkdir research
 python3 -m venv venv
+pip install -r requirments.txt
 if [ -z "$CRON_EXISTS" ]; then
     (crontab -l 2>/dev/null; echo "$CRON_JOB") | crontab -
     echo "Cron job added."
